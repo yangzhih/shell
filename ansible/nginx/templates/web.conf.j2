@@ -1,0 +1,13 @@
+server{
+	listen {{ ngx_server_port }};
+	server_name {{ ngx_server_name }};
+	location / {
+		root {{ ngx_doc_root }};
+	}
+    location ~ \.php$ {
+        fastcgi_pass   {{ php_fpm_ip }}:{{ php_fpm_port }};
+        fastcgi_index  index.php;
+		fastcgi_param  SCRIPT_FILENAME  {{ php_doc_root }}/$fastcgi_script_name;
+		include        fastcgi_params;	
+	}
+}

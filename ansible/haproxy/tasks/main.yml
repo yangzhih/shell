@@ -1,0 +1,9 @@
+- name: Install Haproxy Package
+  yum: name=haproxy state=latest
+
+- name: Copy Configuration file
+  template: src=haproxy.cfg.j2 dest=/etc/haproxy/haproxy.cfg
+  notify: Restart Haproxy
+
+- name: Started and Boot_start Haproxy
+  service: name=haproxy enabled=true state=started

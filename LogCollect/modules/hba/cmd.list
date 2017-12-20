@@ -1,0 +1,11 @@
+#########################################################################
+#use '|' is divided into 2 sections
+#1 section:group id
+#2 section:command and comment
+#writehead:<file> to request run_cmd write head
+#########################################################################
+group          cmd
+fc             | get_fc_pci_info
+fc             | get_fc_fw_info
+fc             | get_fc_driver_info
+fc             | get_fc_wwpn_info

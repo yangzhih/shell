@@ -1,0 +1,143 @@
+#########################################################################
+#use '|' is divided into 2 sections
+#1 section:group id
+#2 section:command and comment
+#writehead:<file> to request run_cmd write head
+#########################################################################
+group          cmd
+base           | createdirs
+etcconf        | cp -L -rf /etc/syslog.conf output/etc/
+varlog         | cp -L -rf /var/log/mcelog* output/var/log/
+varlog         | cp -L -rf /var/log/syslog* output/var/log/
+varlog         | cp -L -rf /var/log/boot* output/var/log/
+varlog         | cp -L -rf /var/log/message* output/var/log/
+varlog         | cp -L -rf /var/log/dmesg* output/var/log/
+varlog         | cp -L -rf /var/log/maillog* output/var/log/
+varlog         | cp -L -rf /var/log/cron* output/var/log/
+varlog         | cp -L -rf /var/log/secure* output/var/log/
+varlog         | last reboot >> output/var/log/last_reboot.txt 2>&1 #writehead:output/var/log/last_reboot.txt
+cmdhistory     | cp -L -rf /root/.bash_history output/root/
+dmesg          | dmesg  >> output/dmesg.txt 2>&1 #writehead:output/dmesg.txt
+
+#########################################LINUX NET INFO############################################
+etcconf        | cp -L -rf /etc/resolv.conf output/etc/
+etcconf        | cp -L -rf /etc/nsswitch.conf output/etc/
+etcconf        | cp -L -rf /etc/hosts output/etc/
+etcconf        | cp -L -rf /etc/services output/etc/
+etcconf        | cp -L -rf /etc/network/interfaces output/etc/network/
+etcconf        | cp -L -rf /etc/udev/rules.d/70-persistent-net.rules output/etc/udev/rules.d/
+procfile       | cp -L -rf /proc/net/bonding/bond* output/proc/net/bonding/
+
+#########################################LINUX INTERRUPT INFO######################################
+procfile       | cp -L -rf /proc/interrupts output/proc/
+
+#########################################LINUX FILE SYSTEM INFO####################################
+crashlist      | du -ah /var/crash/ >> output/dump_list.txt 2>&1 #writehead:output/dump_list.txt
+commands       | df -lT >>output/command_log.txt 2>&1 #writehead:output/command_log.txt
+commands       | df -li >>output/command_log.txt 2>&1 #writehead:output/command_log.txt
+commands       | mount  >>output/command_log.txt 2>&1 #writehead:output/command_log.txt
+commands       | nfsstat -cnrs >>output/command_log.txt 2>&1 #writehead:output/command_log.txt
+commands       | lsof >>output/command_log.txt 2>&1 #writehead:output/command_log.txt
+commands       | last >>output/command_log.txt 2>&1 #writehead:output/command_log.txt
+commands       | get_reboot_info
+
+procfile       | cp -L -rf /proc/filesystems output/proc/
+etcconf        | cp -L -rf /etc/exports  output/etc/
+etcconf        | cp -L -rf /etc/fstab  output/etc/
+
+#########################################LINUX KERNEL SPACE INFO####################################
+procfile       | cp -L -rf /proc/self/maps output/proc/self/
+procfile       | cp -L -rf /proc/self/smaps output/proc/self/
+procfile       | cp -L -rf /proc/self/numa_maps output/proc/self/
+
+
+#########################################LINUX KERNEL  INFO############################################################
+commands       | ulimit -a >>output/command_log.txt 2>&1 #writehead:output/command_log.txt
+commands       | ipcs -a >>output/command_log.txt 2>&1 #writehead:output/command_log.txt
+commands       | ipcs -l >>output/command_log.txt 2>&1 #writehead:output/command_log.txt
+commands       | sysctl -a >>output/command_log.txt 2>&1 #writehead:output/command_log.txt
+commands       | uptime >>output/command_log.txt 2>&1 #writehead:output/command_log.txt
+commands       | iostat >>output/command_log.txt 2>&1 #writehead:output/command_log.txt
+commands       | top -n 1 >>output/command_log.txt 2>&1 #writehead:output/command_log.txt
+commands       | vmstat >>output/command_log.txt 2>&1 #writehead:output/command_log.txt
+commands       | service --status-all >>output/command_log.txt 2>&1 #writehead:output/command_log.txt
+commands       | uname -a >>output/command_log.txt 2>&1 #writehead:output/command_log.txt
+commands       | ps auwx >>output/command_log.txt 2>&1 #writehead:output/command_log.txt
+commands       | hostid  >>output/command_log.txt  2>&1 #writehead:output/command_log.txt
+etcconf        | cp -L -rf /etc/sysctl.conf   output/etc/
+procfile       | cp -L -rf /proc/iomap       output/proc/
+procfile       | cp -L -rf /proc/ioports       output/proc/
+procfile       | cp -L -rf /proc/swaps       output/proc/
+procfile       | cp -L -rf /proc/slabinfo       output/proc/
+procfile       | cp -L -rf /proc/locks       output/proc/
+procfile       | cp -L -rf /proc/modules       output/proc/
+procfile       | cp -L -rf /proc/mounts       output/proc/
+procfile       | cp -L -rf /proc/version       output/proc/
+procfile       | cp -L -rf /proc/stat       output/proc/
+procfile       | cp -L -rf /proc/schedstat       output/proc/
+procfile       | cp -L -rf /proc/zoneinfo       output/proc/
+procfile       | cp -L -rf /proc/config.gz       output/proc/
+boot           | cp -L -rf /boot/config*      output/boot/
+#########################################LINUX PACKAGE INFO########################################################
+commands       | rpm -qa    >>output/command_log.txt 2>&1 #writehead:output/command_log.txt
+
+#########################################LINUX BOOT INFO########################################################
+boot           | cp -L -rf /etc/grub.conf             output/etc/
+boot           | cp -L -rf /boot/grub/device.map      output/boot/grub/
+boot           | cp -L -rf /boot/grub2/device.map      output/boot/grub2/
+boot           | cp -L -rf /boot/grub/menu.lst        output/boot/grub/
+boot           | cp -L -rf /boot/grub2/menu.lst        output/boot/grub2/
+boot           | cp -L -rf /boot/grub/.               output/boot/grub/
+boot           | cp -L -rf /boot/grub2/.               output/boot/grub2/
+boot           | cp -L -rf /boot/menu/.               output/boot/menu/
+boot           | ls -lh /boot  >> output/boot/ls_boot.txt 2>&1
+varlog         | cp -L -rf /var/log/boot.log          output/var/log/
+varlog         | cp -L -rf /var/log/boot.msg          output/var/log/
+varlog         | cp -L -rf /var/log/boot.omsg         output/var/log/
+etcconf        | cp -L -rf /etc/inittab               output/etc/
+
+#########################################LINUX NTP INFO############################################################
+etcconf        | cp -L -rf /etc/ntp.conf              output/etc/
+etcconf        | cp -L -rf /etc/ntp/step-tickers      output/etc/ntp/
+etcconf        | cp -L -rf /etc/ntp/ntpservers        output/etc/ntp/
+
+#########################################NAME SERVICE##############################################################
+etcconf        | cp -L -rf /etc/yp.conf               output/etc/
+
+#########################################KERNEL SYMBOLS##############################################################
+etcconf        | cp -L -rf /proc/kallsyms             output/proc/
+
+#########################################MEMORY TYPE RANGE REGISTERS###################################################
+procfile       | cp -L -rf /proc/mtrr                 output/proc/
+
+#########################################VIRTUAL MEMORY STATISTICS###################################################
+procfile       | cp -L -rf /proc/vmstat               output/proc/
+
+#########################################BUDDY INFO###################################################
+procfile       | cp -L -rf /proc/buddyinfo            output/proc/
+
+#########################################SYSTEM CMD LINE###################################################
+procfile       | cp -L -rf /proc/cmdline              output/proc/
+
+#########################################SYSTEM DEVICES###################################################
+procfile       | cp -L -rf /proc/devices              output/proc/
+
+#########################################DISK STATISTICS###################################################
+procfile       | cp -L -rf /proc/diskstats            output/proc/
+
+#########################################I/O MEMORY###################################################
+procfile       | cp -L -rf /proc/iomem                output/proc/
+
+#########################################SYSTEM KEYS###################################################
+procfile       | cp -L -rf /proc/keys                 output/proc/
+procfile       | cp -L -rf /proc/key-users            output/proc/
+procfile       | cp -L -rf /proc/dma                  output/proc/
+#########################################ENVIROMENT VARIABLES###################################################
+commands       | printenv                  >>output/command_log.txt 2>&1 #writehead:output/command_log.txt
+commands       | hostname                  >>output/command_log.txt 2>&1 #writehead:output/command_log.txt
+commands       | cat /etc/issue            >>output/command_log.txt 2>&1 #writehead:output/command_log.txt
+commands       | lsb_release -a            >>output/command_log.txt 2>&1 #writehead:output/command_log.txt
+commands       | chkconfig --list          >>output/command_log.txt 2>&1 #writehead:output/command_log.txt
+sosreport      | get_redhat_log
+supportconfig  | get_suse_log
+

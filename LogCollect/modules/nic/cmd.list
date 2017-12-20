@@ -1,0 +1,27 @@
+#########################################################################
+#use '|' is divided into 2 sections
+#1 section:group id
+#2 section:command and comment
+#writehead:<file> to request run_cmd write head
+#########################################################################
+group          cmd
+base           | createdirs
+lspci          | get_eth_pci_info
+ifconfig       | ifconfig -a >> output/ifconfig.txt 2>&1 #writehead:output/ifconfig.txt
+ifconfig       | ifconfig -s >> output/ifconfig.txt 2>&1 #writehead:output/ifconfig.txt
+etcconf        | cp -L -rf /etc/modprobe.d/. output/etc/modprobe.d/ >& /dev/null
+etcconf        | cp -L -rf /etc/sysconfig/network* output/etc/sysconfig/ >& /dev/null
+etcconf        | cp -L -rf /etc/sysconfig/network-scripts/. output/etc/sysconfig/network-scripts/ >& /dev/null
+netstat        | netstat -i -n >>output/netstat.txt 2>&1 #writehead:output/netstat.txt
+netstat        | netstat -avn  >>output/netstat.txt 2>&1 #writehead:output/netstat.txt
+netstat        | netstat -s    >>output/netstat.txt 2>&1 #writehead:output/netstat.txt
+netstat        | netstat -rvn  >>output/netstat.txt 2>&1 #writehead:output/netstat.txt
+netstat        | netstat -antp  >>output/netstat.txt 2>&1 #writehead:output/netstat.txt
+netstat        | netstat -lntp  >>output/netstat.txt 2>&1 #writehead:output/netstat.txt
+netstat        | netstat -tuanp  >>output/netstat.txt 2>&1 #writehead:output/netstat.txt
+ethtool        | get_ethtool_info
+dmesg          | get_nic_dmesg_info
+route          | route -n  >>output/route_n.txt  #writehead:output/route_n.txt
+iptables       | iptables -L  >>output/iptables_l.txt #writehead:output/iptables_l.txt
+modinfo        | modinfo ixgbe  >>output/modinfo.txt  #writehead:output/modinfo.txt 
+modinfo        | modinfo bnx2  >>output/modinfo.txt  #writehead:output/modinfo.txt 

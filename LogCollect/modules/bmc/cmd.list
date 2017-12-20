@@ -1,0 +1,76 @@
+#########################################################################
+#use '|' is divided into 2 sections
+#1 section:group id
+#2 section:command and comment
+#writehead:<file> to request run_cmd write head
+#########################################################################
+group          cmd
+chassis        | $ipmitool chassis power status > output/chassis_power_status.txt 2>&1  #writehead:output/chassis_power_status.txt  |yes
+chassis        | $ipmitool chassis status > output/chassis_status.txt 2>&1  #writehead:output/chassis_status.txt
+chassis        | $ipmitool raw 0x3a 0x9a > output/bmc_customid.txt 2>&1  #writehead:output/bmc_customid.txt
+#power          | $ipmitool power status  > output/power_status.txt #writehead:output/power_status.txt
+fru            | $ipmitool fru list > output/fru.txt 2>&1 #writehead:output/fru.txt							|yes
+mc             | $ipmitool mc info >  output/mc_info.txt 2>&1 #writehead:output/mc_info.txt						|yes
+mc             | $ipmitool mc getenables >  output/mc_getenables.txt 2>&1 #writehead:output/mc_getenables.txt
+mc             | $ipmitool mc guid > output/mc_guid.txt 2>&1 #writehead:output/mc_guid.txt
+mc             | $ipmitool mc selftest >  output/mc_selftest.txt 2>&1 #writehead:output/mc_selftest.txt
+mc             | $ipmitool mc watchdog get >  output/mc_watchdog_get.txt 2>&1 #writehead:output/mc_watchdog_get.txt
+sensor         | $ipmitool sensor list all > output/sensor_list_all.txt 2>&1 #writehead:output/sensor_list_all.txt
+sensor         | $ipmitool sensor > output/sensor.txt 2>&1 #writehead:output/sensor.txt
+sdr            | $ipmitool sdr elist all > output/sdr_elist_all.txt 2>&1 #writehead:output/sdr_elist_all.txt
+sdr            | $ipmitool sdr list all > output/sdr_list_all.txt 2>&1 #writehead:output/sdr_list_all.txt
+#sdr            | $ipmitool sdr  > output/sdr.txt 2>&1 #writehead:output/sdr.txt
+sdr            | get_bmc_sdr_oem
+sel            | $ipmitool sel elist > output/sel_elist.txt 2>&1 #writehead:output/sel_elist.txt
+#sel            | $ipmitool sel list > output/sel_list.txt 2>&1 #writehead:output/sel_list.txt
+sel            | $ipmitool sel > output/sel.txt 2>&1 #writehead:output/sel.txt
+sel            | $ipmitool sel writeraw output/sel.bin >/dev/null 2>/dev/null
+time           | $ipmitool sel time get > output/bmctime.txt 2>&1 #writehead:output/bmctime.txt					|yes
+time           | $ipmitool raw 0x0a 0x48 >> output/bmctime.txt 2>&1 #writehead:output/bmctime.txt
+time           | date > output/systime.txt 2>&1 #writehead:output/systime.txt
+time           | hwclock >> output/systime.txt 2>&1 #writehead:output/systime.txt
+lan            | $ipmitool lan print 1 > output/lan_print_1.txt 2>&1 #writehead:output/lan_print_1.txt					|yes
+lan            | $ipmitool lan print 8 > output/lan_print_8.txt 2>&1 #writehead:output/lan_print_8.txt					|yes
+#lan            | $ipmitool lan print > output/lan_print.txt 2>&1 #writehead:output/lan_print.txt
+#peci           | get_peci_msr
+#peci           | get_peci_csr
+bmcreg         | getbmcreg
+#servstatus     | getbmcservicestatus
+channel        | $ipmitool channel getaccess 1 > output/channel_getaccess_1.txt 2>&1  #writehead:output/channel_getaccess_1.txt
+channel        | $ipmitool channel getaccess 8 > output/channel_getaccess_8.txt 2>&1  #writehead:output/channel_getaccess_8.txt
+channel        | $ipmitool channel getciphers ipmi 1 > output/channel_getciphers_ipmi.txt 2>&1  #writehead:output/channel_getciphers_ipmi.txt
+channel        | $ipmitool channel getciphers ipmi 8 >> output/channel_getciphers_ipmi.txt 2>&1  #writehead:output/channel_getciphers_ipmi.txt
+channel        | $ipmitool channel getciphers ipmi  >> output/channel_getciphers_ipmi.txt 2>&1  #writehead:output/channel_getciphers_ipmi.txt
+channel        | $ipmitool channel getciphers sol 1 > output/channel_getciphers_sol.txt 2>&1  #writehead:output/channel_getciphers_sol.txt
+channel        | $ipmitool channel getciphers sol 8 >> output/channel_getciphers_sol.txt 2>&1  #writehead:output/channel_getciphers_sol.txt
+channel        | $ipmitool channel getciphers sol  >> output/channel_getciphers_sol.txt 2>&1  #writehead:output/channel_getciphers_sol.txt
+channel        | $ipmitool channel info > output/channel_info.txt 2>&1  #writehead:output/channel_info.txt
+firewall       | $ipmitool firewall info 1 > output/firewall_info_1.txt 2>&1  #writehead:output/firewall_info_1.txt
+firewall       | $ipmitool firewall info 8 > output/firewall_info_8.txt  2>&1  #writehead:output/firewall_info_8.txt
+me             | $ipmitool -b 0x06 -t 0x2c raw 0x06 0x04 > output/mestatus 2>&1 #writehead:output/mestatus			|yes
+me             | $ipmitool -b 0x00 -t 0x2c raw 0x06 0x04 >> output/mestatus 2>&1 #writehead:output/mestatus			|yes
+me             | $ipmitool -b 0x06 -t 0x2c raw 0x06 0x01 > output/medeviceinfo.txt 2>&1 #writehead:output/medeviceinfo.txt		|yes
+me             | $ipmitool -b 0x00 -t 0x2c raw 0x06 0x01 >> output/medeviceinfo.txt 2>&1 #writehead:output/medeviceinfo.txt	|yes
+session        | $ipmitool session info active > output/session_info_active.txt #writehead:output/session_info_active.txt
+session        | $ipmitool session info all > output/session_info_all.txt #writehead:output/session_info_all.txt
+sol            | $ipmitool sol info > output/sol_info.txt #writehead:output/sol_info.txt
+sol            | $ipmitool sol info 0 >> output/sol_info.txt #writehead:output/sol_info.txt
+sol            | $ipmitool sol info 1 >> output/sol_info.txt #writehead:output/sol_info.txt
+sol            | $ipmitool sol info 2 >> output/sol_info.txt #writehead:output/sol_info.txt
+sol            | $ipmitool sol info 3 >> output/sol_info.txt #writehead:output/sol_info.txt
+sol            | $ipmitool sol info 4 >> output/sol_info.txt #writehead:output/sol_info.txt
+sol            | $ipmitool sol info 5 >> output/sol_info.txt #writehead:output/sol_info.txt
+sol            | $ipmitool sol info 6 >> output/sol_info.txt #writehead:output/sol_info.txt
+sol            | $ipmitool sol info 7 >> output/sol_info.txt #writehead:output/sol_info.txt
+sol            | $ipmitool sol payload status > output/sol_payload_status.txt #writehead:output/sol_payload_status.txt
+user           | $ipmitool user list 1 >output/user_list_1.txt #writehead:output/user_list_1.txt						
+user           | $ipmitool user list 8 >output/user_list_8.txt #writehead:output/user_list_8.txt						
+log            | $ipmitool raw 0x3a 0xe5 >output/8480fpga.txt #writehead:output/8480fpga.txt					|yes
+log            | $ipmitool raw 0x2e 0x10 >output/8460cpld.txt #writehead:output/8460cpld.txt					|yes
+log            | getbmclogs
+log            | getpecilog														|yes
+log            | $ipmitool raw 0x3a 0x72 >output/psucount.txt #writehead:output/psucount.txt
+log            | $ipmitool raw 0x3a 0x71 0x00 >output/psu0.txt #writehead:output/psu0.txt	
+log            | $ipmitool raw 0x3a 0x71 0x01 >output/psu1.txt #writehead:output/psu1.txt	
+log            | $ipmitool raw 0x3a 0x71 0x02 >output/psu2.txt #writehead:output/psu2.txt
+log            | $ipmitool raw 0x3a 0x71 0x03 >output/psu3.txt #writehead:output/psu3.txt			

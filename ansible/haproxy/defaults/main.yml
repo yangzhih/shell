@@ -1,0 +1,8 @@
+frontend_ip: 172.18.11.7
+frontend_port: 80
+
+backend_server1_ip: 192.168.10.20
+backend_server2_ip: 192.168.10.21
+backend_server1_port: 8080
+backend_server2_port: 8080
+

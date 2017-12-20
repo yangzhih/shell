@@ -1,0 +1,14 @@
+- name: Install Package
+  yum: name={{ item }} state=latest
+  with_items:
+  - java-1.8.0-openjdk
+  - tomcat
+  - tomcat-webapps
+  - tomcat-admin-webapps
+  - tomcat-docs-webapp
+
+- name: Copy Configuration File
+  template: src=server.xml.j2 dest=/etc/tomcat/server.xml
+
+- name: Start and Boot Tomcat Service
+  service: name=tomcat enabled=true state=started

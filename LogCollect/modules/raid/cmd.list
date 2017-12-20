@@ -1,0 +1,13 @@
+#########################################################################
+#use '|' is divided into 2 sections
+#1 section:group id
+#2 section:command and comment
+#writehead:<file> to request run_cmd write head
+#########################################################################
+group          cmd
+megaraid       | get_storage_info |yes
+megaraid       | get_sas_raid_log 
+megaraid       | get_lsi2308_log
+megaraid       | get_lsi3008_log
+megaraid       | get_megaraid_log
+pmcraid        | get_pmc_info	  |yes

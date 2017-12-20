@@ -1,0 +1,21 @@
+Please Select
+power status
+fru list
+mc info
+mc guid
+sensor list all
+sdr elist all
+sel elist
+sel time get
+lan print 1
+lan print 8
+-b 6 -t 0x2c raw 6 4
+-b 0 -t 0x2c raw 6 4
+-b 6 -t 0x2c raw 6 1
+-b 0 -t 0x2c raw 6 1
+user list
+power on
+power off
+power reset
+power cycle
+mc reset cold

@@ -1,0 +1,6 @@
+ngx_server_port: 8080
+ngx_server_name: "{{ ansible_fqdn }}"
+ngx_doc_root: "/opt/html"
+php_doc_root: "/opt/php"
+php_fpm_ip: 127.0.0.1
+php_fpm_port: 9000

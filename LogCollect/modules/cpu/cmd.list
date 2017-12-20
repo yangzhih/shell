@@ -1,0 +1,9 @@
+#########################################################################
+#use '|' is divided into 2 sections
+#1 section:group id
+#2 section:command and comment
+#writehead:<file> to request run_cmd write head
+#########################################################################
+group          cmd
+proc           | cat /proc/cpuinfo  >> output/cpuinfo.txt 2>&1 #writehead:output/cpuinfo.txt			|yes
+dmidecode      | dmidecode -t processor >> output/cpu_dmidecode.txt 2>&1 #writehead:output/cpu_dmidecode.txt

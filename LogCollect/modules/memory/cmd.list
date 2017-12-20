@@ -1,0 +1,14 @@
+#########################################################################
+#use '|' is divided into 2 sections
+#1 section:group id
+#2 section:command and comment
+#writehead:<file> to request run_cmd write head
+#########################################################################
+group          cmd
+proc           | mkdir -p output/proc/
+proc           | cp -L -rf /proc/meminfo output/proc/meminfo
+dmidecode      | dmidecode -t memory >> output/memory_dmidecode.txt 2>&1 #writehead:output/memory_dmidecode.txt
+free           | free  >> output/memory_free.txt 2>&1 #writehead:output/memory_free.txt
+free           | free -m >> output/memory_free.txt 2>&1 #writehead:output/memory_free.txt
+free           | free -g  >> output/memory_free.txt 2>&1 #writehead:output/memory_free.txt
+ecc            | mcelog --client >> output/mem_ecc.txt 2>&1 #writehead:output/mem_ecc.txt

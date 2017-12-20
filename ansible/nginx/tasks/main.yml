@@ -1,0 +1,21 @@
+- name: install nginx package
+  yum: name=nginx state=latest
+
+- name: Copy Configuration file
+  template: src=web.conf.j2 dest=/etc/nginx/conf.d/web.conf
+  notify: reload nginx
+
+- name: mkdir Website docroot
+  file: path=/opt/html state=directory
+
+- name: mkdir PHP docroot
+  file: path=/opt/php state=directory
+
+- name: Install HTML index file
+  template: src=index.html.j2 dest={{ ngx_doc_root }}/index.html
+
+- name: Install PHP index file
+  template: src=index.php.j2 dest={{ php_doc_root }}/index.php
+
+- name: Make sure nginx start with boot
+  service: name=nginx state=started enabled=true

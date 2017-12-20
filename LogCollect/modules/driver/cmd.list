@@ -1,0 +1,9 @@
+#########################################################################
+#use '|' is divided into 2 sections
+#1 section:group id
+#2 section:command and comment
+#writehead:<file> to request run_cmd write head
+#########################################################################
+group          cmd
+lsmod	       | lsmod >> output/lsmod.txt 2>&1 #writehead:output/lsmod.txt
+modinfo	       | get_module_info

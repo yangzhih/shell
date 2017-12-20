@@ -1,0 +1,11 @@
+#########################################################################
+#use '|' is divided into 2 sections
+#1 section:group id
+#2 section:command and comment
+#writehead:<file> to request run_cmd write head
+#########################################################################
+group          cmd
+dmidecode      | dmidecode -t bios >> output/version_bios.txt 2>&1 #writehead:output/version_bios.txt		|yes
+dmidecode      | dmidecode -t 1 >> output/dmisystem.txt 2>&1 #writehead:output/dmisystem.txt		|yes
+dmidecode      | dmidecode > output/dmidecode 2>&1 #writehead:output/dmidecode				|yes
+biosoption     | ./SCELNX64/SCELNX_64 /o /s output/biosoption.txt >& /dev/null

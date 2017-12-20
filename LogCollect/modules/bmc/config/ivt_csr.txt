@@ -1,0 +1,93 @@
+##+----------------------------------------------------------------------+
+##|                                                                      |
+##|Ivybridge Error Status CSR collection                                 |
+##|Format# bus dev fun reg name                                          |
+##|                                                                      |
+##|   bus - Bus number(0 or 1)                                           |
+##|   dev - Device number(0 ~ 31)                                        |
+##|   fun - Function number(0 ~ 7)                                       |
+##|   reg - Register offset(0 ~ 0xFFF)                                   |
+##|   name - Register name                                               |
+##|                                                                      |
+##+----------------------------------------------------------------------+
+1     10  2    0xEC   MCA_ERR_SRC_LOG
+0     5   2    0xA0   viral
+0     5   2    0xA8   errpinsts
+0     5   2    0x1A8  gcerrst
+0     5   2    0x1AC  gcferrst
+0     5   2    0x1B8  gcnerrst
+0     5   2    0x1C0  gnerrst
+0     5   2    0x1C4  gferrst
+0     5   2    0x1CC  gsysst
+0     5   2    0x1DC  gfferrst
+0     5   2    0x1E8  gfnerrst
+0     5   2    0x1EC  gnferrst
+0     5   2    0x1F8  gnnerrst
+0     5   2    0x230  irpp0errst
+0     5   2    0x238  irpp0fferrst
+0     5   2    0x23C  irpp0fnerrst
+0     5   2    0x250  irpp0nferrst
+0     5   2    0x254  irpp0nnerrst
+0     5   2    0x26C  irpp0errcnt
+0     5   2    0x2B0  irpp1errst
+0     5   2    0x2BB  irpp1fferrst
+0     5   2    0x2BC  irpp1fnerrst
+0     5   2    0x2D0  irpp1nferrst
+0     5   2    0x2D4  irpp1nnerrst
+0     5   2    0x2EC  irpp1errcnt
+0     5   2    0x300  iioerrst
+0     5   2    0x308  iiofferrst
+0     5   2    0x31C  iiofnerrst
+0     5   2    0x320  iionferrst
+0     5   2    0x334  iionnerrst
+0     5   2    0x340  iioerrcnt
+0     5   2    0x380  mierrst
+0     5   2    0x388  mifferrst
+0     5   2    0x39C  mifnerrst
+0     5   2    0x3A0  minferrst
+0     5   2    0x3B4  minnerrst
+0     5   2    0x3C0  mierrcnt
+1     8   0    0xD8   qpiviral0
+1     9   0    0xD8   qpiviral1
+1     24  0    0xD8   qpiviral2
+1     19  0    0x4C   R2PINGERRLOG0
+1     19  0    0xB0   R2EGRERRLOG
+1     19  0    0xB4   R2EGRERRLOG2
+1     11  0    0x64   UBOXErrSts
+1     11  2    0xB4   BIST_RESULTS
+1     16  6    0x104  N0C0R0_R1
+1     16  6    0x108  N0C0R2_R3
+1     16  6    0x10C  N0C0R4_R5
+1     16  6    0x110  N0C0R6_R7
+1     16  7    0x104  N0C1R0_R1
+1     16  7    0x108  N0C1R2_R3
+1     16  7    0x10C  N0C1R4_R5
+1     16  7    0x110  N0C1R6_R7
+1     16  2    0x104  N0C2R0_R1
+1     16  2    0x108  N0C2R2_R3
+1     16  2    0x10C  N0C2R4_R5
+1     16  2    0x110  N0C2R6_R7
+1     16  3    0x104  N0C3R0_R1
+1     16  3    0x108  N0C3R2_R3
+1     16  3    0x10C  N0C3R4_R5
+1     16  3    0x110  N0C3R6_R7
+1     30  6    0x104  N1C0R0_R1
+1     30  6    0x108  N1C0R2_R3
+1     30  6    0x10C  N1C0R4_R5
+1     30  6    0x110  N1C0R6_R7
+1     30  7    0x104  N1C1R0_R1
+1     30  7    0x108  N1C1R2_R3
+1     30  7    0x10C  N1C1R4_R5
+1     30  7    0x110  N1C1R6_R7
+1     30  2    0x104  N1C2R0_R1
+1     30  2    0x108  N1C2R2_R3
+1     30  2    0x10C  N1C2R4_R5
+1     30  2    0x110  N1C2R6_R7
+1     30  3    0x104  N1C3R0_R1
+1     30  3    0x108  N1C3R2_R3
+1     30  3    0x10C  N1C3R4_R5
+1     30  3    0x110  N1C3R6_R7
+1     14  1    0x68   MC7_Status_Shadow_lo
+1     14  1    0x6C   MC7_Status_Shadow_hi
+1     18  1    0x68   MC8_Status_Shadow_lo
+1     18  1    0x6C   MC8_Status_Shadow_hi

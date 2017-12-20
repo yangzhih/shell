@@ -1,0 +1,22 @@
+#########################################################################
+#use '|' is divided into 2 sections
+#1 section:group id
+#2 section:command and comment
+#writehead:<file> to request run_cmd write head
+#########################################################################
+group          cmd
+asset          | get_asset_info
+#firmware       | get_fw_version
+asset          | get_asset_by_cmds
+#dmidecode      | dmidecode    > output/dmidecode.txt 2>&1 #writehead:output/dmidecode.txt
+lspci          | lspci   >  output/lspci.txt 2>&1 #writehead:output/lspci.txt
+lspci          | lspci -xxx -vvv -t > output/lspcixxxvvvt.txt 2>&1 #writehead:output/lspcixxxvvvt.txt
+lspci          | lspci -xxxx -vvv -b > output/lspcixxxvvvb.txt 2>&1 #writehead:output/lspcixxxvvvb.txt
+lspci          | lspci -tv   > output/lspcitv.txt 2>&1 #writehead:output/lspcitv.txt
+lspci          | lspci -n   > output/lspcin.txt 2>&1 #writehead:output/lspcin.txt
+lspci          | lspci -nn   > output/lspcinn.txt 2>&1 #writehead:output/lspcinn.txt		|yes
+lspci          | lspci -vvv > output/lspcivvv.txt 2>&1 #writehead:output/lspcivvv.txt
+lsusb          | lsusb   > output/lsusb.txt 2>&1 #writehead:output/lsusb.txt
+lsusb          | lsusb -tv   > output/lsusbtv.txt 2>&1 #writehead:output/lsusbtv.txt
+lsmod	       | lsmod > output/lsmod.txt 2>&1 #writehead:output/lsmod.txt
+modinfo	       | get_module_info
